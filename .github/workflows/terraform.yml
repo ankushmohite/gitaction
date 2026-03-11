@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Choose Terraform Action"
+        required: true
+        default: "apply"
+        type: choice
+        options:
+          - apply
+          - destroy
 
 jobs:
   terraform:
@@ -11,7 +21,7 @@ jobs:
 
     steps:
 
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v4
 
     - name: Setup Terraform
@@ -27,14 +37,17 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Terraform Format
-      run: terraform fmt
-
     - name: Terraform Validate
       run: terraform validate
 
     - name: Terraform Plan
+      if: ${{ github.event.inputs.action != 'destroy' }}
       run: terraform plan
 
     - name: Terraform Apply
+      if: ${{ github.event.inputs.action != 'destroy' }}
       run: terraform apply -auto-approve
+
+    - name: Terraform Destroy
+      if: ${{ github.event.inputs.action == 'destroy' }}
+      run: terraform destroy -auto-approve
