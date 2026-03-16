@@ -1,0 +1,50 @@
+# Interviewse ask --> interpolation -->  interpolation is a way in which we can extract the values from terraform block.
+
+
+
+#################### How to Install Terraform ##########################################
+
+suao apt update -y
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
+
+<block> <parameter> {
+    arguments
+}
+
+* block 
+If i want create infra then i use. ( block = resource, same  for block = output, block = variable )
+If i want to show output by using terraform the i use block = output.
+
+block         parameters
+--------     --------------
+resource      aws_instance my-instance {
+
+}
+
+##################################################################################
+vi main.tf
+resource local_file my_file {     (my_file is the resource file identifier)
+
+filename = "automate.txt"
+content = "best contain for devops"
+
+}
+
+
+1. Terraform init --> Initialised the terraform
+ls -a
+.terraform terraform.lock.hcl
+
+2. terraform validate --> to check  configuration valid or not.
+3. terraform plan --> basically use for dry run.
+4. terraform apply --> Execute changes into the environment.
+.terraform 
+terraform.lock.hcl
+****terraform.tfstate*****
+
+The terraform.tfstate file stores the current state of your infrastructure.
+It keeps a record of all resources created by Terraform(VMs, networks, databases, etc.).
+Know what already exists
+When you run terraform plan or terraform apply, Terraform checks this file to know what is already created and what needs to change.
